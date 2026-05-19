@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tim Niz — Videogames Audio Designer</title>
+<link rel="icon" href="images/favicon.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Commissioner:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#2d2d2d;
+    --bg-2:#262626;
+    --fg:#ffffff;
+    --muted:#a8a8a8;
+    --accent:#ff5e03;
+    --line:rgba(255,255,255,.12);
+    --max:1100px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-padding-top:80px}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg);
+    color:var(--fg);
+    font-family:'Commissioner',system-ui,-apple-system,Segoe UI,sans-serif;
+    font-weight:300;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--fg);text-decoration:none;border-bottom:1px solid var(--line);transition:color .15s,border-color .15s}
+  a:hover{color:var(--accent);border-color:var(--accent)}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 28px}
+  header.site{
+    position:sticky;top:0;z-index:10;
+    background:rgba(0,0,0,.22);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:18px 0}
+  .brand{font-weight:600;letter-spacing:.04em;font-size:18px}
+  .brand .dot{color:var(--accent)}
+  nav ul{display:flex;gap:26px;list-style:none;margin:0;padding:0;flex-wrap:wrap}
+  nav a{font-size:14px;letter-spacing:.06em;text-transform:uppercase;border:none;color:var(--muted)}
+  nav a:hover{color:var(--accent)}
+
+  section{padding:96px 0;border-bottom:1px solid var(--line)}
+  section h2{
+    font-size:13px;letter-spacing:.3em;text-transform:uppercase;
+    color:var(--accent);font-weight:500;margin:0 0 28px;
+  }
+  .hero{padding:120px 0 96px;position:relative;overflow:hidden}
+  .hero .wrap{position:relative;z-index:2}
+  .hero-bg{
+    position:absolute;inset:0;pointer-events:none;
+    background-image:url('images/BG-hero.png');
+    background-repeat:no-repeat;background-position:center center;
+    background-size:cover;opacity:.45;z-index:1;
+  }
+  .hero h1{
+    font-size:clamp(38px,6vw,76px);
+    line-height:1.05;letter-spacing:-.01em;font-weight:600;margin:0 0 24px;
+  }
+  .hero h1 em{font-style:normal;color:var(--accent)}
+  .hero .lede{font-size:20px;max-width:720px;color:#e6e6e6;font-weight:300}
+  .hero .meta{margin-top:32px;display:flex;gap:18px;flex-wrap:wrap;font-size:14px;color:var(--muted);letter-spacing:.05em;text-transform:uppercase}
+  .hero .meta span{padding:6px 12px;border:1px solid var(--line);border-radius:999px}
+
+  .carousel{position:relative;display:flex;align-items:stretch;gap:18px}
+  .carousel .stage{
+    flex:1;aspect-ratio:16/9;position:relative;overflow:hidden;
+    background:var(--bg-2);border:1px solid var(--line);border-radius:6px;
+  }
+  .carousel .slide{
+    position:absolute;inset:0;opacity:0;visibility:hidden;
+    transition:opacity .35s ease;
+  }
+  .carousel .slide.is-active{opacity:1;visibility:visible}
+  .carousel .slide iframe{width:100%;height:100%;border:0;display:block}
+  .arrow{
+    flex:0 0 54px;width:54px;align-self:stretch;max-height:504px;
+    border-radius:6px;
+    background:transparent;color:var(--accent);
+    border:1px solid var(--accent);cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    font-size:22px;line-height:1;padding:0;
+    transition:background .15s,color .15s,transform .15s;
+  }
+  .arrow:hover{background:var(--accent);color:#1a1a1a}
+  .arrow:active{transform:scale(.95)}
+  .dots{display:flex;gap:8px;justify-content:center;margin-top:18px}
+  .dots button{
+    width:8px;height:8px;border-radius:50%;border:0;padding:0;cursor:pointer;
+    background:var(--line);transition:background .15s,transform .15s;
+  }
+  .dots button.is-active{background:var(--accent);transform:scale(1.3)}
+  .reel-caption{
+    margin-top:14px;text-align:center;color:var(--muted);
+    font-size:12px;letter-spacing:.25em;text-transform:uppercase;
+  }
+  @media (max-width:760px){
+    .arrow{flex:0 0 42px;width:42px;font-size:18px}
+    .carousel{gap:10px}
+  }
+
+  .projects{display:grid;gap:0}
+  .project{
+    display:grid;grid-template-columns:180px 1fr auto;gap:24px;
+    padding:28px 0;border-top:1px solid var(--line);align-items:start;
+  }
+  .project:last-child{border-bottom:1px solid var(--line)}
+  .project .date{color:var(--muted);font-size:14px;letter-spacing:.05em;padding-top:4px}
+  .project h3{margin:0 0 8px;font-size:24px;font-weight:500}
+  .project h3 .where{color:var(--muted);font-weight:300;font-size:15px;margin-left:10px}
+  .project ul{margin:8px 0 0;padding-left:18px;color:#d8d8d8;font-size:15px}
+  .project ul li{margin:2px 0}
+  .project .go{
+    align-self:center;color:var(--accent);border:1px solid var(--accent);
+    padding:8px 14px;border-radius:999px;font-size:12px;letter-spacing:.15em;
+    text-transform:uppercase;white-space:nowrap;
+  }
+  .project .go:hover{background:var(--accent);color:#1a1a1a}
+
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:64px}
+  .cols p{margin:0 0 14px;font-size:17px;color:#e0e0e0;max-width:60ch}
+  .skills{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+  .skills span{
+    padding:8px 14px;border:1px solid var(--line);border-radius:999px;
+    font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#ddd;
+  }
+  .stack-list{list-style:none;padding:0;margin:18px 0 0;color:#d8d8d8}
+  .stack-list li{padding:8px 0;border-bottom:1px dashed var(--line);font-size:15px}
+
+  .edu .row{display:grid;grid-template-columns:180px 1fr;gap:24px;padding:18px 0;border-top:1px solid var(--line)}
+  .edu .row:last-child{border-bottom:1px solid var(--line)}
+  .edu .date{color:var(--muted);font-size:14px}
+  .edu h4{margin:0 0 4px;font-size:18px;font-weight:500}
+  .edu .sub{color:var(--muted);font-size:14px}
+
+  .langs{display:flex;flex-wrap:wrap;gap:14px;margin-top:10px}
+  .langs span{
+    padding:10px 16px;border:1px solid var(--line);border-radius:6px;font-size:14px;
+  }
+  .langs b{color:var(--accent);font-weight:600;margin-left:8px}
+
+  .contact-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:48px;align-items:end}
+  .contact-grid h3{font-size:clamp(28px,4vw,44px);margin:0 0 16px;font-weight:500;line-height:1.15}
+  .contact-grid .links{display:flex;flex-direction:column;gap:12px;font-size:17px}
+  .contact-grid .links a{border:none;color:#fff}
+  .contact-grid .links a:hover{color:var(--accent)}
+  .contact-grid .links span.k{color:var(--muted);font-size:12px;letter-spacing:.2em;text-transform:uppercase;display:block;margin-bottom:2px}
+
+  footer{background:#242424;margin-top:0}
+  footer .inner{max-width:var(--max);margin:0 auto;padding:40px 28px;font-size:13px;color:var(--muted);display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}
+  #contact{background:#242424}
+
+  @media (max-width:760px){
+    .cols,.contact-grid{grid-template-columns:1fr;gap:32px}
+    .project{grid-template-columns:1fr;gap:8px}
+    .project .go{justify-self:start}
+    .edu .row{grid-template-columns:1fr}
+    section{padding:64px 0}
+    .hero{padding:72px 0 56px}
+    nav ul{gap:14px}
+  }
+</style>
+</head>
+<body id="top">
+
+<header class="site">
+  <div class="wrap nav">
+    <div class="brand"><a href="#top" style="border:none;color:inherit">TIM NIZ<span class="dot">.</span></a></div>
+    <nav>
+      <ul>
+        <li><a href="#reel">Reel</a></li>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="wrap">
+      <h1>Sound design <em>for games.</em><br>Music, integration &amp; everything in&nbsp;between.</h1>
+      <p class="lede">I'm Tim — a videogames audio designer based in Europe. I record, synthesize, score and integrate sound for indie and student projects, with a focus on quality and iteration until things actually feel right.</p>
+      <div class="meta">
+        <span>Wwise · FMOD</span>
+        <span>Unreal · Unity</span>
+        <span>Open to opportunities</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="reel">
+    <div class="wrap">
+      <h2>01 — Sound Reels</h2>
+      <div class="carousel" aria-roledescription="carousel">
+        <button class="arrow" type="button" data-dir="-1" aria-label="Previous reel">&#10094;</button>
+        <div class="stage">
+          <div class="slide is-active" data-id="K0JrcFidoAY" aria-hidden="false"></div>
+          <div class="slide" data-id="AuXhAjPFmnA" aria-hidden="true"></div>
+        </div>
+        <button class="arrow" type="button" data-dir="1" aria-label="Next reel">&#10095;</button>
+      </div>
+      <div class="dots" role="tablist" aria-label="Choose a reel"></div>
+      <div class="reel-caption">Reel <span data-current>1</span> / <span data-total>2</span></div>
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="wrap">
+      <h2>02 — Game Audio Credits</h2>
+      <div class="projects">
+
+        <article class="project">
+          <div class="date">02.2026 – 04.2026</div>
+          <div>
+            <h3>Into The Haze <span class="where">itch.io</span></h3>
+            <ul>
+              <li>Sound Design — recording, synthesizing, integration (Soundly)</li>
+              <li>Wwise &amp; UE5 (Blueprints)</li>
+              <li>Wwise Spatial Audio: Portals, AkSpatialAudioVolumes, optimisation</li>
+              <li>Monologue recording &amp; processing</li>
+              <li>Music*</li>
+            </ul>
+          </div>
+          <a class="go" href="https://tost-games.itch.io/little-hope-road-to-salvation" target="_blank" rel="noopener">View ↗</a>
+        </article>
+
+        <article class="project">
+          <div class="date">02.2025</div>
+          <div>
+            <h3>The Gate <span class="where">itch.io</span></h3>
+            <ul>
+              <li>Sound Design — recording, integration into the game</li>
+              <li>FMOD &amp; UE5 (Blueprints)</li>
+              <li>Music*</li>
+            </ul>
+          </div>
+          <a class="go" href="https://tost-games.itch.io/the-gate" target="_blank" rel="noopener">View ↗</a>
+        </article>
+
+        <article class="project">
+          <div class="date">2025 – Present</div>
+          <div>
+            <h3>Cardstronaut <span class="where">Steam</span></h3>
+            <ul>
+              <li>Sound Design — mainly synthesizing, Soundly, integration</li>
+              <li>Unity and FMOD</li>
+              <li>Music*</li>
+            </ul>
+          </div>
+          <a class="go" href="https://store.steampowered.com/app/3177510/Cardstronaut/" target="_blank" rel="noopener">View ↗</a>
+        </article>
+
+        <article class="project">
+          <div class="date">09.2025 – 01.2026</div>
+          <div>
+            <h3>DeltaVR <span class="where">University of Tartu internship</span></h3>
+            <ul>
+              <li>Sound Design — recording, synthesizing, integration (Soundly)</li>
+              <li>Unity + FMOD, Steam Audio (sound occlusion)</li>
+              <li>Music*</li>
+              <li>Devlog for future sound-related developers</li>
+            </ul>
+          </div>
+          <a class="go" href="https://cgvrgit.ulno.net/cgvr/DeltaVR" target="_blank" rel="noopener">View ↗</a>
+        </article>
+
+        <article class="project">
+          <div class="date">2025</div>
+          <div>
+            <h3>EleBall <span class="where">Steam</span></h3>
+            <ul>
+              <li>Gameplay music</li>
+            </ul>
+          </div>
+          <a class="go" href="https://store.steampowered.com/app/2985890/EleBall/" target="_blank" rel="noopener">View ↗</a>
+        </article>
+
+      </div>
+      <p style="margin-top:14px;color:var(--muted);font-size:13px">* Music made in collaboration / co-authored on most listed projects.</p>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap cols">
+      <div>
+        <h2>03 — About me</h2>
+        <p>I'm passionate about sound design, music, learning new tools and overall growing in this field. Most importantly — I care about quality and iterating to achieve something worthful.</p>
+        <p>In addition, I have practical experience in development, mostly from gaming jams, internships and personal projects — so I'm comfortable jumping into engines, blueprints and middleware setups rather than just handing off assets.</p>
+      </div>
+      <div id="skills">
+        <h2>04 — Skills &amp; Stack</h2>
+        <div class="skills">
+          <span>FMOD</span><span>Wwise</span><span>Reaper</span><span>Cubase</span>
+        </div>
+        <ul class="stack-list">
+          <li>Unreal Engine — Wwise, FMOD</li>
+          <li>Unity — FMOD, Steam Audio</li>
+          <li>Python, basic C++ &amp; C#</li>
+          <li>GitHub</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap cols edu">
+      <div>
+        <h2>05 — Education</h2>
+        <div class="row">
+          <div class="date">2021 – 2024</div>
+          <div>
+            <h4>University of Tartu</h4>
+            <div class="sub">Bioengineering and Robotics</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="date">01 – 09.2021</div>
+          <div>
+            <h4>Andrew Zeleno</h4>
+            <div class="sub">Mixing &amp; Mastering course</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h2>06 — Languages</h2>
+        <div class="langs">
+          <span>English <b>C1</b></span>
+          <span>Estonian <b>C1</b></span>
+          <span>Finnish <b>A2</b></span>
+          <span>Russian <b>NT</b></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap contact-grid">
+      <div>
+        <h2>07 — Get in touch</h2>
+        <h3>Have a project, a jam, or just want to say hi? Drop a line.</h3>
+      </div>
+      <div class="links">
+        <div><span class="k">Email</span><a href="mailto:nizamovofficial@gmail.com">nizamovofficial@gmail.com</a></div>
+        <div><span class="k">Itch</span><a href="https://timniz.itch.io/" target="_blank" rel="noopener">timniz.itch.io</a></div>
+        <div><span class="k">Telegram</span><a href="https://t.me/RatasTN" target="_blank" rel="noopener">t.me/RatasTN</a></div>
+        <div><span class="k">Web</span><a href="https://timniz.eu" target="_blank" rel="noopener">timniz.eu</a></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+(function(){
+  const carousel = document.querySelector('.carousel');
+  if(!carousel) return;
+  const slides = Array.from(carousel.querySelectorAll('.slide'));
+  const stage = carousel.querySelector('.stage');
+  const dotsWrap = document.querySelector('.dots');
+  const curEl = document.querySelector('[data-current]');
+  let idx = 0;
+
+  function buildIframe(id){
+    const f = document.createElement('iframe');
+    f.src = 'https://www.youtube.com/embed/' + id + '?rel=0&modestbranding=1&playsinline=1';
+    f.title = 'YouTube video';
+    f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    f.referrerPolicy = 'strict-origin-when-cross-origin';
+    f.allowFullscreen = true;
+    return f;
+  }
+
+  // Lazy-mount iframes on first activation; reuse afterwards.
+  function ensureMounted(slide){
+    if(slide.firstChild) return;
+    slide.appendChild(buildIframe(slide.dataset.id));
+  }
+
+  function show(next){
+    // Stop currently-playing video by removing its iframe (postMessage would need API).
+    const prev = slides[idx];
+    if(prev.firstChild) prev.removeChild(prev.firstChild);
+    prev.classList.remove('is-active');
+    prev.setAttribute('aria-hidden','true');
+
+    idx = (next + slides.length) % slides.length;
+    const cur = slides[idx];
+    ensureMounted(cur);
+    cur.classList.add('is-active');
+    cur.setAttribute('aria-hidden','false');
+
+    dotsWrap.querySelectorAll('button').forEach((b,i)=>{
+      b.classList.toggle('is-active', i===idx);
+      b.setAttribute('aria-selected', i===idx ? 'true':'false');
+    });
+    if(curEl) curEl.textContent = String(idx+1);
+  }
+
+  // Build dots
+  slides.forEach((_,i)=>{
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.setAttribute('role','tab');
+    b.setAttribute('aria-label','Go to reel ' + (i+1));
+    if(i===0){ b.classList.add('is-active'); b.setAttribute('aria-selected','true'); }
+    b.addEventListener('click',()=>show(i));
+    dotsWrap.appendChild(b);
+  });
+
+  carousel.querySelectorAll('.arrow').forEach(btn=>{
+    btn.addEventListener('click',()=>show(idx + parseInt(btn.dataset.dir,10)));
+  });
+
+  // Keyboard nav when section is focused
+  stage.tabIndex = 0;
+  stage.addEventListener('keydown',(e)=>{
+    if(e.key==='ArrowRight') show(idx+1);
+    else if(e.key==='ArrowLeft') show(idx-1);
+  });
+
+  // Mount the initial slide
+  ensureMounted(slides[0]);
+})();
+
+// Smooth scroll for header links — fixed-duration so long jumps don't feel sluggish.
+(function(){
+  const HEADER_OFFSET = 70;
+  const DURATION = 650; // ms
+  // easeInOutCubic — gentle start AND gentle finish (no end-snap)
+  const ease = t => t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2;
+
+  let rafId = null;
+
+  function scrollToY(targetY){
+    if(rafId) cancelAnimationFrame(rafId);
+    const startY = window.scrollY;
+    const dist = targetY - startY;
+    if(Math.abs(dist) < 2) return;
+    const t0 = performance.now();
+    function step(now){
+      const p = Math.min(1, (now - t0) / DURATION);
+      const y = p === 1 ? targetY : startY + dist * ease(p);
+      window.scrollTo(0, y);
+      if(p < 1) rafId = requestAnimationFrame(step);
+      else rafId = null;
+    }
+    rafId = requestAnimationFrame(step);
+  }
+
+  // Block wheel/touch during animation so user input doesn't fight the tween
+  // (also prevents the perceived "snap" when native smooth-scroll resumes mid-tween).
+  ['wheel','touchmove'].forEach(ev =>
+    window.addEventListener(ev, e => { if(rafId) e.preventDefault(); }, {passive:false})
+  );
+
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const id = a.getAttribute('href').slice(1);
+      if(!id) return;
+      const target = id === 'top' ? document.body : document.getElementById(id);
+      if(!target) return;
+      e.preventDefault();
+      const y = id === 'top' ? 0 : target.getBoundingClientRect().top + window.scrollY - HEADER_OFFSET;
+      scrollToY(y);
+      history.replaceState(null, '', '#' + id);
+    });
+  });
+})();
+</script>
+
+<footer>
+  <div class="inner">
+    <div>© Tim Niz · Videogames Audio Designer</div>
+    <div>Based in Europe · Available for projects</div>
+  </div>
+</footer>
+
+</body>
+
+</body>
+</html>
